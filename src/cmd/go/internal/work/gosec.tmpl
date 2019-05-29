@@ -1,0 +1,13 @@
+package main
+
+import(
+	{{range .Imports}}
+	{{ printf "%q" . }}{{end}}
+)
+
+func main() {
+	// Starting the function.
+	{{range .Functions}}
+	go {{ . }}()
+	{{end}}
+}
