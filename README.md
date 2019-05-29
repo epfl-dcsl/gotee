@@ -51,14 +51,37 @@ A detailed README is available in this folder.
 
 ## Ongoing changes
 
-Due to a late refactoring and the prototype nature of the compiler, Gotee temporarily prevents using `gosecure` on functions declared in the main package, and using `gosecure` outside of the `main` package.
+Due to a late refactoring and the prototype nature of the compiler, Gotee temporarily prevents using `gosecure` on functions declared in the main package, and discourages using the `gosecure` keyword outside of the `main` package.
 We further require the `gosec` package to be explicitly imported in main.
-This restrictive behavior was introduced during a code-refactoring that aimed at cleaning up the implementation, and will be fixed.
+This restrictive behavior was introduced during a code-refactoring that aimed at cleaning-up and improving the implementation, and will be fixed. For the moment, the compiler emits errors if it detects a violation.
+A simple workaround is to provide a public function for a particular package that needs to trigger secured routines, and call this function with `gosecure` from main:
+
+```
+package securedpkg
+func Spawn() {
+  go secured1()
+  go secured2()
+  ...
+}
+
+...
+
+package main
+
+gosecure securedpkg.Spawn()
+```
+
+These restrictions were introduced as a temporary fix to prevent nested gosecure calls.
+A cleaner approach is being developped.
 
 ## Benchmarks
 
 We are working on cleaning the benchmarks used in the paper and making them open-source as well.
 
 https://github.com/epfl-dcsl/gosecure-benchmarks
+
+## Snapshot
+
+HEAD master on 05.29.2019
 
 
