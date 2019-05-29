@@ -26,7 +26,7 @@ only moderate performance overheads.
 GOTEE is a research prototype, developed by Adrien Ghosn as part of his PhD at EPFL (Switzerland).
 The code is **not** production-ready and comes with no guarantees. 
 Furthermore, the original repository for GOTEE is an ongoing project.
-As a result, APIs, semantics, and features migh change.
+As a result, APIs, semantics, and features might change.
 We will update this snapshot everytime a milestone is reached.
 
 Gotee only supports linux x86 platforms.
