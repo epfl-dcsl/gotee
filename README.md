@@ -1,6 +1,9 @@
 # Secured Routines: Language-based Construction of Trusted Execution environments.
 
-# Description
+### Authors
+Adrien Ghosn, Prof. James R. Larus, Prof. Edouard Bugnion.
+
+## Description
 
 This repository is a snapshot of GOTEE, a research prototype compiler based on the [Go programming language](https://github.com/golang/go).
 The corresponding research paper was accepted at [ATC19](https://www.usenix.org/conference/atc19).
