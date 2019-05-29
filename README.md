@@ -52,6 +52,7 @@ A detailed README is available in this folder.
 ## Ongoing changes
 
 Due to a late refactoring and the prototype nature of the compiler, Gotee temporarily prevents using `gosecure` on functions declared in the main package, and using `gosecure` outside of the `main` package.
+We further require the `gosec` package to be explicitly imported in main.
 This restrictive behavior was introduced during a code-refactoring that aimed at cleaning up the implementation, and will be fixed.
 
 ## Benchmarks
