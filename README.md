@@ -73,6 +73,16 @@ package main
 
 gosecure securedpkg.Spawn()
 ```
+Instead of: 
+
+```
+package securedpkg
+
+gosecure secured1()
+gosecure secured2()
+...
+
+```
 
 These restrictions were introduced as a temporary fix to prevent nested gosecure calls.
 A cleaner approach is being developped.
