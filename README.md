@@ -35,7 +35,7 @@ Gotee only supports linux x86 platforms.
 
 Gotee has one dependency on a [serializer](https://github.com/aghosn/serializer), required to communicate with the Intel AESM module. This package must be installed and the `serializer` command available in your shell environment (`go install` command).
 
-Moreover, you need to have an SGX enabled processor with the Intel AESM enclave running (for more information about how to set up Intel SGX, go to Intel SGX SDK [repositories](https://github.com/intel/linux-sgx]).
+Moreover, you need to have an SGX enabled processor with the Intel AESM enclave running (for more information about how to set up Intel SGX, go to Intel SGX SDK [repositories](https://github.com/intel/linux-sgx).
 The Intel SGX SDK itself is not required.
 
 Gotee requires a valid `go` install on the target machine to bootstrap the compilation.
