@@ -538,6 +538,7 @@ func schedinit() {
 		UnsafeAllocator.Initialize(Cooprt.StartUnsafe, Cooprt.SizeUnsafe)
 		procs = 2 //TODO modify this for more threads in enclave.
 		sched.lastpoll = ENCL_NPOLLING
+		Cleanup_xstates()
 	}
 
 	if procresize(procs) != nil {

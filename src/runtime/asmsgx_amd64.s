@@ -81,6 +81,9 @@ setup:
 	MOVQ (g_stack+stack_hi)(AX), SP
 	CALL runtime·stackcheck(SB)	
 
+	// clear xstate
+	//CALL ·Cleanup_xstates(SB)
+
 	CALL runtime·mstart(SB)
 	
 	// It should never return. If it does, segfault that thread
@@ -380,4 +383,66 @@ cleanup:
 	MOVQ SI, BP
 
 	RET
-	
+
+// issue #3 ABI poisoning through FPU/SSE registers
+// fix transposed from open-enclave
+// https://github.com/openenclave/openenclave/commit/ad57b943be8f4caaa43174ed25f2a11a477786f3 .
+//TEXT runtime·Cleanup_xstates(SB),NOSPLIT,$0
+//	// Preserve registers being used
+//	PUSHQ AX
+//	PUSHQ DX
+//	PUSHQ DI
+//
+//	// Set the XSAVE_MASK
+//	MOVW $0xFFFFFFFF, AX
+//	MOVW $0xFFFFFFFF, DX
+//	
+//	LEAQ ·OE_XSAVE_INITIAL_STATE(SB), DI
+//	// Restore initial enclave XSAVE state
+//	//xrstor64
+//	BYTE $0x48; BYTE $0x0f; BYTE $0xae; BYTE $0x2f; // XRSTOR64 0(DI)  
+//	
+//	// Restore registers
+//	POPQ DI
+//	POPQ DX
+//	POPQ AX
+//	RET
+
+// fxrstor loads floating point state.
+//
+// The code corresponds to:
+//
+//     fxrstor64 (%rbx)
+//
+TEXT ·Fxrstor(SB),NOSPLIT,$0-8
+	MOVQ addr+0(FP), BX
+	MOVL $0xffffffff, AX
+	MOVL $0xffffffff, DX
+	BYTE $0x48; BYTE $0x0f; BYTE $0xae; BYTE $0x0b;
+	RET
+
+// xrstor loads floating point state.
+//
+// The code corresponds to:
+//
+//     xrstor (%rdi)
+//
+TEXT ·Xrstor(SB),NOSPLIT,$0-8
+	MOVQ addr+0(FP), DI
+	MOVL $0xffffffff, AX
+	MOVL $0xffffffff, DX
+	BYTE $0x48; BYTE $0x0f; BYTE $0xae; BYTE $0x2f;
+	RET
+
+// xsave saves floating point state.
+//
+// The code corresponds to:
+//
+//     xsave (%rdi)
+//
+TEXT ·Xsave(SB),NOSPLIT,$0-8
+	MOVQ addr+0(FP), DI
+	MOVL $0xffffffff, AX
+	MOVL $0xffffffff, DX
+	BYTE $0x48; BYTE $0x0f; BYTE $0xae; BYTE $0x27;
+	RET
